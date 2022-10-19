@@ -1,0 +1,27 @@
+<script>
+	function executerlabonnefonc(extension) {
+		switch (extension) {
+			case ".txt":
+				return function (fichier) {
+					// Lire le fichier et faire des trucs super cool !
+
+					console.log("J'ai bien traiter le fichier .txt");
+				};
+
+			case ".png":
+				return function (fichier) {
+					// faire apparaitre sur la home page faire des trucs super cool !
+					console.log("J'ai bien traiter le fichier .png");
+				};
+
+			default:
+				return function () {
+					console.log("Probleme");
+				};
+		}
+	}
+
+	executerlabonnefonc(".txt")();
+	executerlabonnefonc(".txr")();
+	executerlabonnefonc(".png")();
+</script>
