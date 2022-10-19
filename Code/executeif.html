@@ -1,0 +1,33 @@
+<script>
+	// executer la fonction exec_func sur element de array si verif est vrai
+	function executeifelse(array, verif_func, exec_func, fallback_func) {
+		for (const element of array) {
+			if (verif_func(element) === true) {
+				exec_func(element);
+			} else {
+				fallback_func(element);
+			}
+		}
+	}
+
+	function executeifelse(array, verif_func, exec_func, fallback_func) {
+		const func = [fallback_func, exec_func];
+		for (const element of array) {
+			let indexfunc = verif_func(element);
+			func[indexfunc](element);
+		}
+	}
+	// array est un array de string
+	// verif_func(element)
+	// exec_func(element)
+	// retour rien
+	// foreachif
+	function executeif(array, verif_func, exec_func) {
+		for (const element of array) {
+			if (verif_func(element) === true) {
+				exec_func(element);
+			}
+		}
+	}
+	executeif([10, 2, 30, 3, 10, 40, 11, 9], (x) => x % 2 !== 0, console.log);
+</script>
