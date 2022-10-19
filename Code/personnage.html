@@ -1,0 +1,45 @@
+<script>
+	// Personnage :
+
+	// Attribut : hp, strength, endurance, name
+
+	// Methode : subirDommage(montant_dommage),
+	// attaquer(target) *** attaquer du montant de votre strength, cout 2 en endurance ***
+	// annonce : s'annoncer *** donner toute les stats ***
+
+	class Personnage {
+		// Declaration attribut en dehors du constructeur
+		hp = 100;
+		strength = 10;
+		endurance = 25;
+
+		constructor(name) {
+			this.name = name;
+		}
+
+		subirDommage(montant_dommage) {
+			this.hp -= montant_dommage;
+		}
+
+		attaquer(target) {
+			if (this.endurance >= 2) {
+				target.subirDommage(this.strength);
+				this.endurance -= 2;
+			}
+		}
+
+		annonce() {
+			console.log(
+				`Je m'appelle ${this.name} mes stats sont :\nhp : ${this.hp}\nstrength : ${this.strength}\nendurance : ${this.endurance}`
+			);
+		}
+	}
+
+	let p = new Personnage("Conan");
+	let f = new Personnage("Felix");
+
+	p.annonce();
+	f.attaquer(p);
+	f.annonce();
+	p.annonce();
+</script>
