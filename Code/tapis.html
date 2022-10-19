@@ -2,8 +2,8 @@
 	// Exemple de code qui fais un tapis
 	function tapis(n) {
 		let str = "";
-		for (let i = 0; i < n - 1; i++) {
-			for (let j = 0; j < n - 1; j++) {
+		for (let i = 0; i < n; i++) {
+			for (let j = 0; j < n; j++) {
 				if (i % 2 == 0) {
 					if (j % 2 == 0) {
 						str += "*";
@@ -18,8 +18,16 @@
 					}
 				}
 			}
+			str += "\n";
 		}
 		return str;
 	}
+
 	console.log(tapis(5));
+
+	// *#*#*
+	// #*#*#
+	// *#*#*
+	// #*#*#
+	// *#*#*
 </script>
