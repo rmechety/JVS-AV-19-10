@@ -1,0 +1,31 @@
+<script>
+	let person = {
+		name: "John",
+		age: 30,
+		greet: function () {
+			console.log("Hello");
+		},
+	};
+
+	person.greet();
+	console.log(person.age);
+
+	function Voiture(fabricant, modele, annee) {
+		this.fabricant = fabricant;
+		this.modele = modele;
+		this.annee = annee;
+	}
+	Voiture.prototype.rouler = function () {
+		console.log("Vroum vroum");
+	};
+	Voiture.prototype.stop = function () {
+		console.log("* crissement de pneu *");
+	};
+
+	let maVoiture = new Voiture("Ford", "Mustang", 1969);
+	let maVoiture2 = new Voiture("porche", "911", 2019);
+	maVoiture.rouler();
+	maVoiture2.rouler();
+	maVoiture.stop();
+	maVoiture2.stop();
+</script>

@@ -1,0 +1,27 @@
+<script>
+	class Voiture {
+		// Propriete
+		fabricant = null;
+		modele = null;
+		annee = null;
+		etat = "neuf";
+
+		constructor(fabricant = "Porche", modele = "Carrera", annee = 2022) {
+			this.fabricant = fabricant;
+			this.modele = modele;
+			this.annee = annee;
+			// this.etat = "neuf";
+		}
+
+		rouler() {
+			console.log("Vroum Vroum");
+		}
+
+		stop() {
+			console.log("*crissements de pneus*");
+		}
+	}
+	let maVoiture = new Voiture("Ford", "Mustang", 1969);
+
+	console.log(maVoiture);
+</script>
