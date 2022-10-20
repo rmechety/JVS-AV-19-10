@@ -1,0 +1,263 @@
+<style>
+	.row {
+		display: flex;
+	}
+	.col {
+		flex: 1;
+		padding: 1em;
+		border: solid;
+		width: 10%;
+	}
+</style>
+
+<div id="jeu" class="row">
+	<div id="j1" class="col">
+		<div>Name :</div>
+		<div id="name1"></div>
+		<div>HP :</div>
+		<div id="hp1"></div>
+		<div>stamina :</div>
+		<div id="stamina1"></div>
+	</div>
+	<div id="j2" class="col">
+		<div>Name :</div>
+		<div id="name2"></div>
+		<div>HP :</div>
+		<div id="hp2"></div>
+		<div>stamina :</div>
+		<div id="stamina2"></div>
+	</div>
+	<div id="turn"></div>
+	<button id="1" onclick="playturn(1)"></button>
+	<button id="2" onclick="playturn(2)"></button>
+	<button id="3" onclick="playturn(3)"></button>
+	<button id="4" onclick="playturn(4)"></button>
+</div>
+
+<div id="choix">
+	<button onclick="setj1('Mage')">Mage</button>
+	<button onclick="setj1('Guerrier')">Guerrier</button>
+	<button onclick="setj1('Tank')">Tank</button>
+</div>
+
+<script>
+	class Spell {
+		constructor(nom, damage, staminacost, castcallback) {
+			this.nom = nom;
+			this.damage = damage;
+			this.staminacost = staminacost;
+			this.castcallback = castcallback;
+		}
+		cast(caster, target) {
+			caster.stamina -= staminacost;
+			target.subirDommage(this.damage);
+			this.castcallback(caster, target);
+		}
+	}
+
+	class Personnage {
+		// Declaration attribut en dehors du constructeur
+		_hp = 100;
+		_strength = 10;
+		_stamina = 25;
+		opponent = null;
+		attaques = [];
+		id = 1;
+		constructor(name, id) {
+			this.name = name;
+			if (id != undefined) {
+				this.id = id;
+			}
+			changevaluewithid("name" + this.id, this.name);
+		}
+
+		subirDommage(montant_dommage) {
+			this.hp -= montant_dommage;
+		}
+
+		attaquer(target) {
+			if (this.stamina >= 2) {
+				target.subirDommage(this.strength);
+				this.stamina -= 2;
+			}
+		}
+
+		annonce() {
+			console.log(
+				`Je m'appelle ${this.name} mes stats sont :\nhp : ${this.hp}\nstrength : ${this.strength}\nstamina : ${this.stamina}`
+			);
+		}
+
+		jouertour(choix) {
+			// choix est un nombre
+			// [attaque1, attaque2, attaque3];
+			if (this.attaques.length < choix - 1) {
+				this.attaques[action - 1].cast(this, this.opponent);
+			} else {
+				this.attaquer(this.opponent);
+			}
+		}
+
+		get hp() {
+			return this._hp;
+		}
+
+		get stamina() {
+			return this._stamina;
+		}
+
+		set hp(value) {
+			this._hp = value;
+			changevaluewithid("hp" + this.id, value);
+		}
+
+		set stamina(value) {
+			this._stamina = value;
+			changevaluewithid("stamina" + this.id, value);
+		}
+
+		afficherCoups() {
+			let i = 1;
+			for (let attaque of this.attaques) {
+				changevaluewithid(i, attaque.nom);
+				i++;
+			}
+			changevaluewithid(i, "Attaque");
+		}
+	}
+
+	class Guerrier extends Personnage {
+		attaques = [
+			new Spell("Hache tournoyante", 40, 10, () => {
+				console.log("*** FOIIUUUUU ***");
+			}),
+			new Spell("Hache Fracassante", 20, 5, () => {
+				console.log("*** FRACAS ***");
+			}),
+			new Spell("Execution", 100, 40, () => {
+				console.log("*** WAW QUELLE FORCE !!!! ***");
+			}),
+		];
+		constructor(name, id) {
+			super(name, id);
+			this.hp = 1000;
+			this.stamina = 100;
+			this.strength = 15;
+		}
+	}
+
+	class Mage extends Personnage {
+		attaques = [
+			new Spell("Boule de feu", 40, 10, () => {
+				console.log("*** Phrase magique lancant du feu ***");
+			}),
+			new Spell("Boule de glace", 20, 5, () => {
+				console.log(
+					"*** Phrase magique qui lance un projectile mieux qu'une boule de neige ***"
+				);
+			}),
+			new Spell("Explosion", 100, 40, () => {
+				console.log("*** BOUMMMMMMM !!!! ***");
+			}),
+		];
+		constructor(name, id) {
+			super(name, id);
+			this.hp = 300;
+			this.stamina = 500;
+			this.strength = 40;
+		}
+	}
+
+	class Tank extends Personnage {
+		attaques = [
+			new Spell("Rouler sur l'ennemi", 40, 10, () => {
+				console.log("*** Est-ce une boule ? ***");
+			}),
+			new Spell("Coup de bouclier", 20, 5, () => {
+				console.log("*** AIE !! J'aurais pas aimer me la prendre celle la ***");
+			}),
+			new Spell("Calin mortel", 100, 40, () => {
+				console.log("*** Bruit d'os qui se brisent ***");
+			}),
+		];
+		constructor(name, id) {
+			super(name, id);
+			this.hp = 3000;
+			this.stamina = 2000;
+			this.strength = 2;
+		}
+	}
+
+	function changevaluewithid(id, value) {
+		document.getElementById(id).innerHTML = value;
+	}
+
+	function changedisplaywithid(id, value) {
+		document.getElementById(id).style.display = value;
+	}
+
+	let j1 = null;
+	let j2 = null;
+	let tour = 1;
+
+	changedisplaywithid("jeu", "none");
+
+	function playturn(choice) {
+		if (tour % 2 == 1) {
+			j1.jouertour(choice);
+			j2.afficherCoups();
+		} else {
+			j2.jouertour(choice);
+			j1.afficherCoups();
+		}
+		tour++;
+		changevaluewithid(
+			"turn",
+			"Tour du joueur : " + ((tour % 2) + 2 * !(tour % 2))
+		);
+	}
+
+	function setj1(classename) {
+		switch (classename) {
+			case "Guerrier":
+				j1 = new Guerrier("Connan");
+				break;
+
+			case "Tank":
+				j1 = new Tank("Darius");
+				break;
+
+			case "Mage":
+				j1 = new Mage("Maximus");
+				break;
+		}
+
+		setj2();
+
+		j1.opponent = j2;
+		j2.opponent = j1;
+
+		changedisplaywithid("choix", "none"); // disparaitre le choix des perso
+		changedisplaywithid("jeu", "block"); // Faire apparaitre le jeu
+		changevaluewithid("turn", "Tour du joueur : 1");
+		j1.afficherCoups();
+	}
+
+	function setj2() {
+		let random = Math.floor(Math.random() * (4 - 1) + 1);
+
+		switch (random) {
+			case 1:
+				j2 = new Guerrier("Connan", 2);
+				break;
+
+			case 2:
+				j2 = new Tank("Darius", 2);
+				break;
+
+			case 3:
+				j2 = new Mage("Maximus", 2);
+				break;
+		}
+	}
+</script>
