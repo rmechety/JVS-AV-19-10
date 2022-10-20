@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link
+			rel="stylesheet"
+			href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.6.1.min.js"
+			integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+			crossorigin="anonymous"
+		></script>
+		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+		<style>
+			.black {
+				background-color: black;
+			}
+			.red {
+				background-color: red;
+			}
+			.blue {
+				background-color: blue;
+			}
+			.green {
+				background-color: green;
+			}
+			.beautyfocus {
+				background-color: antiquewhite;
+			}
+			/* div:hover {
+				display: none;
+			} */
+		</style>
+	</head>
+	<body>
+		<div class="black">B</div>
+		<div class="red">R</div>
+		<div>Sans Classe</div>
+		<p>Ceci est un paragraphe</p>
+		<div class="black">B</div>
+		<div class="red">R</div>
+		<input type="text" placeholder="mail" />
+		<input type="text" placeholder="Pass" />
+
+		<div id="progress"></div>
+	</body>
+
+	<script>
+		$(document).ready(main);
+		function main(params) {
+			// $("div").hover(function () {
+			// 	$(this).hide(1000);
+			// });
+			// $("input").focus(function () {
+			// 	$(this).addClass("beautyfocus");
+			// });
+			// $(".black").click(function () {
+			// 	$(this).toggleClass("blue");
+			// });
+			// $(".red").click(function () {
+			// 	$(this).toggleClass("blue");
+			// });
+
+			// $("div").click(function () {
+			// 	$(this).toggleClass("green");
+			// });
+			// $("div").hover(function () {
+			// 	$(this).slideUp("slow", function () {
+			// 		setTimeout(() => {
+			// 			$(this).slideDown("slow");
+			// 		}, 4000);
+			// 	});
+			// });
+			$("#progress").progressbar({
+				value: 50,
+				max: 100,
+			});
+		}
+	</script>
+</html>
