@@ -1,0 +1,28 @@
+<p id="aide">Des aides seront affichées ici</p>
+<p>E-mail&nbsp;: <input type="text" id="email" name="email" /></p>
+<p>Nom&nbsp;: <input type="text" id="nom" name="nom" /></p>
+<p>Âge&nbsp;: <input type="text" id="âge" name="âge" /></p>
+<script>
+	function afficheAide(aide) {
+		document.getElementById("aide").innerHTML = aide;
+	}
+
+	function creerCallbackAide(aide) {
+		return function () {
+			afficheAide(aide);
+		};
+	}
+
+	function prepareAide() {
+		var texteAide = [
+			{ id: "email", aide: "Votre adresse e-mail" },
+			{ id: "nom", aide: "Votre prénom et nom" },
+			{ id: "âge", aide: "Your age (you must be over 16)" },
+		];
+		for (var i = 0; i < texteAide.length; i++) {
+			var item = texteAide[i];
+			document.getElementById(item.id).onfocus = creerCallbackAide(item.aide);
+		}
+	}
+	prepareAide();
+</script>
