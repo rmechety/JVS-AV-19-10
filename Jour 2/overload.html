@@ -1,0 +1,82 @@
+<script>
+	class Voiture {
+		constructor() {}
+	}
+	class Chat {
+		constructor() {}
+	}
+	class Personnage {
+		constructor() {}
+	}
+
+	// function addition(a, b, c) {
+	// 	//
+	// 	function addition_num(params) {}
+
+	// 	switch (typeof a) {
+	// 		case "number":
+	// 			return addition_num(a, b, c);
+	// 		case "string":
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// function addition(a, b, c) {
+	// 	//
+	// 	function addition_2(params) {}
+	// 	function addition_3(params) {}
+
+	// 	switch (arguments.length) {
+	// 		case 2:
+	// 			return addition_2(a, b);
+	// 		case 3:
+	// 			return addition_3(a, b, c);
+	// 	}
+	// 	return a + b - c;
+	// }
+	// addition(a, b);
+	// addition(a, b, c);
+	// addition(new Voiture());
+
+	// function fairedubruit(params) {
+	// 	if (params instanceof Chat) {
+	// 		console.log("Miaou");
+	// 	} else if (params instanceof Voiture) {
+	// 		console.log("Vroum");
+	// 	} else {
+	// 		console.log("Pas de bruit connu");
+	// 	}
+	// }
+
+	// fairedubruit(new Chat());
+	// fairedubruit(new Voiture());
+	// fairedubruit(new Personnage());
+
+	function addition(a, ...rest) {
+		console.log(rest);
+		console.log(arguments);
+		rest.forEach((e) => {
+			console.log("Mon argument est : " + e);
+		});
+	}
+
+	addition(10, 20);
+	function toggleclass(...rest) {
+		let tochange = document.getElementById("tochange");
+
+		let toadd = rest.filter((e) => {
+			return !tochange.classList.contains(e);
+		});
+		let toremove = rest.filter((e) => {
+			return tochange.classList.contains(e);
+		});
+
+		toadd.forEach((element) => {
+			tochange.classList.add(element);
+		});
+		toremove.forEach((element) => {
+			tochange.classList.remove(element);
+		});
+	}
+	toggleclass("black", "centered", "hide", "popup");
+</script>
