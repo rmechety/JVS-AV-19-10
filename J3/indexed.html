@@ -1,0 +1,72 @@
+<script>
+	const BOOKSTORE = "books";
+	const ID_BOOKS = "id";
+	let openRequest = indexedDB.open("store", 1);
+
+	function CBrequest_book_add_S(event) {
+		console.log(event);
+		console.log("book added");
+	}
+
+	function CBrequest_book_add_E(event) {
+		console.log(event);
+		console.log("book error");
+	}
+	class Books {
+		constructor(title, autor, price) {
+			this.title = title;
+			this.autor = autor;
+			this.price = price;
+		}
+	}
+
+	// openRequest.onupgardeneeded // la base n'as pas ete trouver (initialisation)
+	// openRequest.onsucess // callback qui va acceder aux donnees
+	// openRequest.onerror // callback qui va gerer les erreurs
+
+	openRequest.onupgradeneeded = function () {
+		// initialiser la base de donne
+		let db = openRequest.result;
+		db.createObjectStore(BOOKSTORE, { keyPath: ID_BOOKS, autoIncrement: true });
+	};
+
+	openRequest.onsuccess = function () {
+		let db = openRequest.result;
+
+		let transaction = db.transaction(BOOKSTORE, "readwrite");
+		let books = transaction.objectStore(BOOKSTORE);
+
+		let books_to_add = [
+			new Books("Le Prince", "Nicolas Machiavel", 25),
+			new Books("Harry Potter", "JK Rowling", 15),
+			new Books("Harry Potter 2", "JK Rowling", 15),
+			new Books("Harry Potter 3", "JK Rowling", 15),
+			new Books("Harry Potter 4", "JK Rowling", 15),
+		];
+
+		for (const book of books_to_add) {
+			let request = books.add(book);
+
+			request.onsucess = CBrequest_book_add_S;
+			request.onsucess = CBrequest_book_add_E;
+		}
+		// for (let index = 1; index < 6; index++) {
+		// 	books.get(index).onsuccess = function (event) {
+		// 		// console.log(event.target.result);
+		// 		let book = event.target.result;
+		//         console.log();
+		// 	};
+		// }
+
+		books.getAll(IDBKeyRange.bound(0, 5)).onsuccess = function (event) {
+			let arrayofbooks = event.target.result;
+
+			for (const book of arrayofbooks) {
+				console.log(`Le livre a pour titre : ${book.title}`);
+				console.log(`Le livre a pour auteur : ${book.autor}`);
+				console.log(`Le livre a pour prix : ${book.price}`);
+				console.log("------------------------------------------");
+			}
+		};
+	};
+</script>
