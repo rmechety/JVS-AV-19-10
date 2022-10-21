@@ -1,0 +1,75 @@
+<body>
+	<style>
+		.row {
+			display: flex;
+		}
+		.col {
+			flex: 1;
+			padding: 1em;
+			border: solid;
+			width: 10%;
+		}
+	</style>
+
+	<div id="jeu" class="row">
+		<div id="j1" class="col">
+			<div id="pb1" style="position: relative; left: 0px"></div>
+			<div>Name :</div>
+			<div id="name1"></div>
+			<div>HP :</div>
+			<div id="hp1"></div>
+			<div>stamina :</div>
+			<div id="stamina1"></div>
+			<img
+				src="https://sites.google.com/site/noiroroo/_/rsrc/1472847178163/classes/guerrier/Guerrier.jpg"
+				alt="Guerrier"
+				width="30px"
+				style="position: relative; top: 0px"
+			/>
+		</div>
+		<div id="j2" class="col">
+			<div id="pb2" style="position: relative; left: 0px"></div>
+			<div>Name :</div>
+			<div id="name2"></div>
+			<div>HP :</div>
+			<div id="hp2"></div>
+			<div>stamina :</div>
+			<div id="stamina2"></div>
+			<img
+				src="https://sites.google.com/site/noiroroo/_/rsrc/1472847178163/classes/guerrier/Guerrier.jpg"
+				alt="Guerrier"
+				width="30px"
+				style="position: relative; top: 0px"
+			/>
+		</div>
+		<div id="turn"></div>
+		<button id="1"></button>
+		<button id="2"></button>
+		<button id="3"></button>
+		<button id="4"></button>
+	</div>
+
+	<div id="choix">
+		<button id="mage">Mage</button>
+		<button id="guerrier">Guerrier</button>
+		<button id="tank">Tank</button>
+	</div>
+</body>
+<link
+	rel="stylesheet"
+	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+/>
+<script
+	src="https://code.jquery.com/jquery-3.6.1.min.js"
+	integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+	crossorigin="anonymous"
+></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script type="module" src="Personnage.js"></script>
+<script type="module" src="Guerrier.js"></script>
+<script type="module" src="Mage.js"></script>
+<script type="module" src="Tank.js"></script>
+<script type="module" src="Ui.js"></script>
+<script type="module" src="Spell.js"></script>
+<script type="module" src="app.js"></script>
