@@ -1,0 +1,81 @@
+<body>
+	<div id="idhisto"></div>
+</body>
+
+<script>
+	const HISTOSTORE = "histo";
+	const ID_HISTOS = "id";
+	let openRequest = indexedDB.open("store", 1);
+
+	function CBrequest_book_add_S(event) {
+		console.log(event);
+		console.log("book added");
+	}
+
+	function CBrequest_book_add_E(event) {
+		console.log(event);
+		console.log("book error");
+	}
+	class Histo {
+		constructor(idvaincqueur, classej1, classej2) {
+			this.idvaincqueur = idvaincqueur;
+			this.classej1 = classej1;
+			this.classej2 = classej2;
+		}
+	}
+
+	// openRequest.onupgardeneeded // la base n'as pas ete trouver (initialisation)
+	// openRequest.onsucess // callback qui va acceder aux donnees
+	// openRequest.onerror // callback qui va gerer les erreurs
+
+	openRequest.onupgradeneeded = function () {
+		// initialiser la base de donne
+		let db = openRequest.result;
+		db.createObjectStore(HISTOSTORE, {
+			keyPath: ID_HISTOS,
+			autoIncrement: true,
+		});
+	};
+
+	function feedDB(histos) {
+		let histos_to_add = [
+			new Histo(1, "Guerrier", "Tank"),
+			new Histo(1, "Guerrier", "Mage"),
+			new Histo(2, "Mage", "Tank"),
+			new Histo(1, "Mage", "Tank"),
+			new Histo(2, "Tank", "Tank"),
+		];
+
+		for (const histo of histos_to_add) {
+			let request = histos.add(histo);
+
+			request.onsucess = CBrequest_book_add_S;
+			request.onsucess = CBrequest_book_add_E;
+		}
+	}
+
+	openRequest.onsuccess = function () {
+		let db = openRequest.result;
+
+		let transaction = db.transaction(HISTOSTORE, "readwrite");
+		let histos = transaction.objectStore(HISTOSTORE);
+
+		histos.get(1).onsuccess = function (event) {
+			if (event.target.result === undefined) feedDB(histos);
+		};
+
+		histos.getAll(IDBKeyRange.bound(0, 5)).onsuccess = function (event) {
+			let arrayofhistos = event.target.result;
+
+			for (const histo of arrayofhistos) {
+				let divhisto = document.querySelector("#idhisto");
+
+				divhisto.innerHTML += `<div> [${arrayofhistos.indexOf(
+					histo
+				)}] : Le gagant est : J${histo.idvaincqueur} | ${histo.classej1} / ${
+					histo.classej2
+				}  </div>`;
+			}
+		};
+	};
+</script>
