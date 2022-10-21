@@ -1,0 +1,31 @@
+<form id="form">
+	<label for="name">What's your name?</label>
+	<input id="name" name="name" required minlength="5" maxlength="20" />
+	<br />
+	<span id="name-too-short" hidden>Name is too short</span>
+	<span id="name-too-long" hidden>Name is too long</span>
+	<br />
+	<button type="submit">Submit</button>
+</form>
+<script>
+	const form = document.querySelector("#form");
+	const name = document.querySelector("#name");
+	const nameTooShort = document.querySelector("#name-too-short");
+	const nameTooLong = document.querySelector("#name-too-long");
+	form.onsubmit = (e) => {
+		// faire des verifications
+		if (Valide) {
+			//envoyer
+		} else e.preventDefault();
+	};
+	name.oninput = (e) => {
+		nameTooShort.hidden = true;
+		nameTooLong.hidden = true;
+		if (e.srcElement.validity.tooShort) {
+			nameTooShort.hidden = false;
+		}
+		if (e.srcElement.validity.tooLong) {
+			nameTooLong.hidden = false;
+		}
+	};
+</script>

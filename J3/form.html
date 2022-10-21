@@ -1,0 +1,23 @@
+<style>
+	input:invalid {
+		border: 1px solid red;
+		background-color: red;
+	}
+	input:valid {
+		border: 1px solid black;
+		background-color: green;
+	}
+</style>
+
+<form id="form" method="GET" action="/">
+	<label for="email">Entrez votre adresse mail</label>
+	<input id="email" name="email" required pattern="[^@]+@[^\.]+\..+" />
+	<button type="submit">Valider</button>
+</form>
+
+<script>
+	const form = document.querySelector("#form");
+	form.onsubmit = (e) => {
+		// e.preventDefault();
+	};
+</script>
