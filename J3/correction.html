@@ -1,8 +1,54 @@
 <body>
 	<div id="idhisto"></div>
+
+	<button onclick="changelocalstorage()">Change color</button>
 </body>
 
+<style>
+	#idhisto.dark > * {
+		background-color: black;
+		color: wheat;
+	}
+
+	#idhisto.light > * {
+		background-color: darkgrey;
+		color: black;
+	}
+</style>
+
 <script>
+	//
+	function changelocalstorage() {
+		let theme = localStorage.getItem("theme");
+		if (theme === null || theme === "light") {
+			turndark();
+			localStorage.setItem("theme", "dark");
+		} else {
+			turnlight();
+			localStorage.setItem("theme", "light");
+		}
+	}
+
+	//
+
+	function turnlight() {
+		document.querySelector("#idhisto").classList.add("light");
+		document.querySelector("#idhisto").classList.remove("dark");
+	}
+	//
+	function turndark() {
+		document.querySelector("#idhisto").classList.remove("light");
+		document.querySelector("#idhisto").classList.add("dark");
+	}
+
+	//
+
+	let theme = localStorage.getItem("theme");
+	if (theme === null || theme === "light") {
+		turnlight();
+	} else if (theme === "dark") {
+		turndark();
+	}
 	const HISTOSTORE = "histo";
 	const ID_HISTOS = "id";
 	let openRequest = indexedDB.open("store", 1);
